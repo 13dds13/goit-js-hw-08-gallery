@@ -83,6 +83,7 @@ function onKeyEsc({key}) {
     if (key === 'Escape') {
         refs.modal.classList.remove('is-open');
         removeWindowListener();
+        removeImgSrc()
     }
 };
 
