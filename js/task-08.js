@@ -44,21 +44,30 @@ addAllEl(refs.galleryList, allLiEl);
 // Реализация делегирования и модалка //
 
 refs.galleryList.addEventListener('click', onImgClick);
-refs.modal.addEventListener('click', onModalClick);
+refs.modal.addEventListener('click', onOverlayClickClose);
 
 function onImgClick(e) {
     e.preventDefault();
     if (e.target === e.currentTarget) return;
 
-    refs.modal.classList.add('is-open');
-    refs.modalImg.src = e.target.dataset.source;
-    refs.modalImg.alt = e.target.alt;
+    const newImgSource = e.target.dataset.source;
+    const newImgAlt = e.target.alt;
+
+    modalIsOpen(newImgSource, newImgAlt)
+
+    addWindowListener();
 };
 
-function onModalClick(e) {
+function modalIsOpen(newImgSource, newImgAlt) {
+    refs.modal.classList.add('is-open');
+    refs.modalImg.src = newImgSource;
+    refs.modalImg.alt = newImgAlt;
+}
+
+function onOverlayClickClose(e) {
     if (e.target === refs.modalOverlay || e.target === refs.modalCloseBtn) {
         e.currentTarget.classList.remove('is-open');
-
+        removeWindowListener();
         removeImgSrc();
     }    
 }
@@ -66,3 +75,23 @@ function onModalClick(e) {
 function removeImgSrc() {
     refs.modalImg.src = '';
 }
+
+// ====================================== //
+// Закрытие модалки по нажатию Esc //
+
+function onKeyEsc({key}) {
+    if (key === 'Escape') {
+        refs.modal.classList.remove('is-open');
+        removeWindowListener();
+    }
+};
+
+function addWindowListener() {
+    window.addEventListener('keydown', onKeyEsc);
+};
+
+function removeWindowListener() {
+    window.removeEventListener('keydown', onKeyEsc);
+};
+
+
