@@ -44,8 +44,7 @@ addAllEl(refs.galleryList, allLiEl);
 // Реализация делегирования и модалка //
 
 refs.galleryList.addEventListener('click', onImgClick);
-refs.modalOverlay.addEventListener('click', onModalOverlayClick);
-refs.modalCloseBtn.addEventListener('click', onModalCloseBtnClick);
+refs.modal.addEventListener('click', onModalClick);
 
 function onImgClick(e) {
     e.preventDefault();
@@ -56,16 +55,12 @@ function onImgClick(e) {
     refs.modalImg.alt = e.target.alt;
 };
 
-function onModalOverlayClick() {
-    refs.modal.classList.remove('is-open');
+function onModalClick(e) {
+    if (e.target === refs.modalOverlay || e.target === refs.modalCloseBtn) {
+        e.currentTarget.classList.remove('is-open');
 
-    removeImgSrc()
-};
-
-function onModalCloseBtnClick() {
-    refs.modal.classList.remove('is-open');
-
-    removeImgSrc()
+        removeImgSrc();
+    }    
 }
 
 function removeImgSrc() {
