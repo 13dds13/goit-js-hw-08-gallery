@@ -53,12 +53,12 @@ function onImgClick(e) {
     const newImgSource = e.target.dataset.source;
     const newImgAlt = e.target.alt;
 
-    modalIsOpen(newImgSource, newImgAlt)
+    modalImg(newImgSource, newImgAlt)
 
     addWindowListener();
 };
 
-function modalIsOpen(newImgSource, newImgAlt) {
+function modalImg(newImgSource, newImgAlt) {
     refs.modal.classList.add('is-open');
     refs.modalImg.src = newImgSource;
     refs.modalImg.alt = newImgAlt;
@@ -79,12 +79,32 @@ function removeImgSrc() {
 // ====================================== //
 // Закрытие модалки по нажатию Esc //
 
-function onKeyEsc({key}) {
-    if (key === 'Escape') {
+function onKeyEsc(e) {
+    if (e.key === 'Escape') {
         refs.modal.classList.remove('is-open');
         removeWindowListener();
         removeImgSrc();
     }
+    
+    if (e.key === 'ArrowRight') {
+        const currentLi = e.target.closest('li');
+        const nextLi = currentLi.nextElementSibling;
+        const nextImg = nextLi.querySelector('.gallery__image');
+        const nextImgSrc = nextImg.src;
+        const nextImgAlt = nextImg.alt;
+
+        modalImg(nextImgSrc, nextImgAlt);
+    };
+
+    if (e.key === 'ArrowLeft') {
+        const currentLi = e.target.closest('li');
+        const previousLi = currentLi.previousElementSibling;
+        const previousImg = previousLi.querySelector('.gallery__image');
+        const previousImgSrc = previousImg.src;
+        const previousImgAlt = previousImg.alt;
+
+        modalImg(previousImgSrc, previousImgAlt);
+    };
 };
 
 function addWindowListener() {
