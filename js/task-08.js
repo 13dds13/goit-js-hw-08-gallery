@@ -79,12 +79,12 @@ function removeImgSrc() {
 // ====================================== //
 // Закрытие модалки по нажатию Esc //
 
-function onKeyEsc(e) {
+function onKeydown(e) {
     if (e.key === 'Escape') {
         refs.modal.classList.remove('is-open');
         removeWindowListener();
         removeImgSrc();
-    }
+    };
     
     if (e.key === 'ArrowRight') {
         const currentLi = e.target.closest('li');
@@ -108,11 +108,11 @@ function onKeyEsc(e) {
 };
 
 function addWindowListener() {
-    window.addEventListener('keydown', onKeyEsc);
+    window.addEventListener('keydown', onKeydown);
 };
 
 function removeWindowListener() {
-    window.removeEventListener('keydown', onKeyEsc);
+    window.removeEventListener('keydown', onKeydown);
 };
 
 
